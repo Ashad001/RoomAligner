@@ -1,0 +1,117 @@
+Image Dimensions: 480x486
+Detected Objects:
+
+Detection 1:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(77.5, 340.5), Width: 69.0, Height: 35.0
+- Confidence: 0.90
+
+Detection 2:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(77.5, 117.0), Width: 69.0, Height: 34.0
+- Confidence: 0.89
+
+Detection 3:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(267.0, 113.0), Width: 50.0, Height: 36.0
+- Confidence: 0.88
+
+Detection 4:
+- Class: tub (ID: 10)
+- Bounding Box: Center(448.5, 215.5), Width: 39.0, Height: 73.0
+- Confidence: 0.88
+
+Detection 5:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(229.0, 321.5), Width: 44.0, Height: 37.0
+- Confidence: 0.83
+
+Detection 6:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(169.5, 150.0), Width: 67.0, Height: 36.0
+- Confidence: 0.82
+
+Detection 7:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(414.0, 159.5), Width: 34.0, Height: 43.0
+- Confidence: 0.82
+
+Detection 8:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(229.0, 321.5), Width: 46.0, Height: 37.0
+- Confidence: 0.82
+
+Detection 9:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(188.5, 184.5), Width: 31.0, Height: 37.0
+- Confidence: 0.78
+
+Detection 10:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(63.0, 217.5), Width: 54.0, Height: 33.0
+- Confidence: 0.78
+
+Detection 11:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(403.0, 342.5), Width: 80.0, Height: 37.0
+- Confidence: 0.77
+
+Detection 12:
+- Class: sink (ID: 7)
+- Bounding Box: Center(398.5, 430.5), Width: 135.0, Height: 25.0
+- Confidence: 0.70
+
+Detection 13:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(154.5, 275.5), Width: 31.0, Height: 39.0
+- Confidence: 0.69
+
+Detection 14:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(173.5, 233.0), Width: 55.0, Height: 38.0
+- Confidence: 0.68
+
+Detection 15:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(254.5, 180.0), Width: 83.0, Height: 46.0
+- Confidence: 0.65
+
+Detection 16:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(382.0, 142.5), Width: 24.0, Height: 43.0
+- Confidence: 0.61
+
+Detection 17:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(402.5, 342.0), Width: 79.0, Height: 36.0
+- Confidence: 0.61
+
+Detection 18:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(398.5, 432.0), Width: 141.0, Height: 26.0
+- Confidence: 0.60
+
+Detection 19:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(219.0, 127.0), Width: 26.0, Height: 52.0
+- Confidence: 0.59
+
+Detection 20:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(58.0, 267.0), Width: 82.0, Height: 26.0
+- Confidence: 0.58
+
+Detection 21:
+- Class: twin_sink (ID: 11)
+- Bounding Box: Center(415.0, 469.5), Width: 122.0, Height: 21.0
+- Confidence: 0.55
+
+Detection 22:
+- Class: large_sink (ID: 4)
+- Bounding Box: Center(164.5, 70.5), Width: 63.0, Height: 49.0
+- Confidence: 0.54
+
+Detection 23:
+- Class: small_sofa (ID: 9)
+- Bounding Box: Center(269.5, 22.0), Width: 73.0, Height: 40.0
+- Confidence: 0.54

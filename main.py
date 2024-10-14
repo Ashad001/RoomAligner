@@ -4,39 +4,53 @@ from dotenv import load_dotenv
 from plan.agents import GeneratePlan, GenerateSuggestions
 from plan.image_analyzer import ImageAnalyzer
 from raster.raster import InferenceClient
+from utils.preprocess_data import preprocess_data
 import streamlit as st
+import base64
+from io import BytesIO
+from PIL import Image
 
 load_dotenv()
 
-st.title("Interior Design Assistant")
+st.set_page_config(page_title="Interior Designer", layout="wide")
 
-def main():
-    st.write("Welcome to the Interior Design Assistant!")
-    st.write("Please upload an image of your room plan.")
-    uploaded_file = st.file_uploader("Choose an image...", type="jpg")
-    if uploaded_file is not None:
-        st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
-        st.write("")
-        st.write("Classifying the objects in the image...")
-        inference_client = InferenceClient()
-        result = inference_client.infer_image(uploaded_file)
-        inference_client.save_results(result, "./json/results.json")
-        st.write("Objects in the image have been classified.")
-        st.write("Generating a natural language description based on the image...")
-        with open("./json/results.json", "r") as f:
-            json_data = json.load(f)
-        plan_generator = GeneratePlan()
-        nl_description = plan_generator(json_data)
-        st.write("Natural language description:")
-        st.write(nl_description)
-        st.write("Generating suggestions for room structure based on the image...")
-        image_analyzer = ImageAnalyzer()
-        room_structure = image_analyzer(json_data)
-        suggestions_generator = GenerateSuggestions()
-        suggested_structure = suggestions_generator(room_structure)
-        st.write("Suggested room structure:")
-        st.write(suggested_structure)
-        
+st.title("🧑🏼 Interior Design Assistant")
 
-if __name__=="__main__":
-    main()
+inference_client = InferenceClient()
+plan_generator = GeneratePlan()
+image_analyzer = ImageAnalyzer()
+suggestions_generator = GenerateSuggestions()
+
+st.write("Welcome to the Interior Design Assistant!")
+st.write("Please upload an image of your room plan.")
+
+image = st.file_uploader("Choose an image...", type="jpg")
+if image is not None:
+    img = Image.open(image)
+    st.image(img, caption="Uploaded Image.", use_column_width=True)
+    
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
+
+    st.write("Classifying the objects in the image...")
+    result = inference_client.infer_image(image_base64)  
+    data = preprocess_data(result)
+
+    st.write("Objects in the image have been classified.")
+    st.write("Generating a natural language description based on the image...")
+
+    nl_description = plan_generator.forward(data)
+    st.write("Natural language description:")
+    st.write(nl_description)
+
+    st.write("Generating suggestions for room structure based on the image...")
+    room_structure = image_analyzer.generate_floor_plan_details(image_base64, nl_description)  
+    st.write("Current room structure:")
+    st.write(room_structure.content)
+    
+    suggested_structure = suggestions_generator.forward(room_structure.content)
+    
+    st.write("Suggested room structure:")
+    st.write(suggested_structure)
+
