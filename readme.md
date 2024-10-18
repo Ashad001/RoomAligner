@@ -14,6 +14,8 @@ RoomAligner is an AI-powered interior design assistant that helps users optimize
 3. **Natural Language Description**: The tool generates a descriptive breakdown of the room’s current structure, identifying key furniture pieces and functional zones.
 4. **Space Optimization**: Based on the room structure, RoomAligner suggests ways to improve space utilization, rearranging furniture for better flow and proposing enhancements.
 
+![RoomAligner](./assets/plan.png)
+
 ## Installation
 ### Clone the Repository
 ```bash
