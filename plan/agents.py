@@ -5,7 +5,6 @@ from dspy import InputField, OutputField, Signature, Module
 from typing import List, Dict, Any
 
 load_dotenv(".env")
-print(os.getenv("OPENAI_API_KEY"))
 lm = dspy.OpenAI(model="gpt-4o-mini", api_key=os.getenv("OPENAI_API_KEY"), max_tokens=4096)
 dspy.settings.configure(lm=lm)
 
