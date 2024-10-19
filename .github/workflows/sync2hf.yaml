@@ -14,21 +14,24 @@ jobs:
         with:
           fetch-depth: 0
 
-          - name: Replace README content
-          run: |
-            echo "---" > README.md
-            echo "title: Room Aligner" >> README.md
-            echo "emoji: 🏠" >> README.md
-            echo "colorFrom: blue" >> README.md
-            echo "colorTo: red" >> README.md
-            echo "sdk: fastapi" >> README.md
-            echo "app_file: app.py" >> README.md
-            echo "pinned: false" >> README.md
-            echo "---" >> README.md
-  
+      - name: Replace README content
+        run: |
+          echo "---" > README.md
+          echo "title: Room Aligner" >> README.md
+          echo "emoji: 🏠" >> README.md
+          echo "colorFrom: blue" >> README.md
+          echo "colorTo: red" >> README.md
+          echo "sdk: fastapi" >> README.md
+          echo "app_file: app.py" >> README.md
+          echo "pinned: false" >> README.md
+          echo "---" >> README.md
 
       - name: Push to Hugging Face hub
         env:
           HF_TOKEN: ${{ secrets.HF_SECRET }}
         run: |
-          git remote add origin https://Ashad001:${{ secrets.SECRET }}@
+          git remote remove origin || true
+          git remote add origin https://Ashad001:${{ secrets.HF_SECRET }}@huggingface.co/spaces/Ashad001/roomaligner
+          git add README.md
+          git commit -m "Update README with template"
+          git push --force origin main
