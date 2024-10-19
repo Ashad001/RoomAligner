@@ -14,12 +14,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Replace README content
+        run: |
+          cat > README.md <<EOL
+---
+title: Room Aligner
+emoji: 🏠
+colorFrom: blue
+colorTo: red
+sdk: fastapi
+app_file: app.py
+pinned: false
+---
+EOL
+
       - name: Push to Hugging Face hub
         env:
           HF_TOKEN: ${{ secrets.HF_SECRET }}
         run: |
-          git remote remove origin || true
-          git remote add origin https://Ashad001:${{ secrets.HF_SECRET }}@huggingface.co/spaces/Ashad001/roomaligner
-          git add .
-          git commit -m "Sync code to Hugging Face Hub" || true
-          git push --force origin main
+          git remote add origin https://Ashad001:${{ secrets.SECRET }}@
