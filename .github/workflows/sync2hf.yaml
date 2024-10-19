@@ -14,6 +14,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configure Git
+        run: |
+          git config --global user.email "ashad001sp@gmail.com"
+          git config --global user.name "Ashad"
+
       - name: Replace README content
         run: |
           echo "---" > README.md
