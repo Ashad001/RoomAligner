@@ -6,7 +6,7 @@ RUN apt-get update && \
     libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a user and switch to it
+# Create a user and switch to itw
 RUN useradd -m -u 1000 user
 USER user
 ENV PATH="/home/user/.local/bin:$PATH"
