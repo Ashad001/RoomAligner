@@ -60,6 +60,7 @@ mypy-extensions==1.0.0
 narwhals==1.9.2
 numpy==2.1.1
 openai==1.51.2
+opencv-contrib-python==4.10.0.84
 opencv-python==4.10.0.84
 opencv-python-headless==4.10.0.84
 optuna==4.0.0
