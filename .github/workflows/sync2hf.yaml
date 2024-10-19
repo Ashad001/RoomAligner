@@ -27,7 +27,7 @@ jobs:
           echo "colorFrom: blue" >> README.md
           echo "colorTo: red" >> README.md
           echo "sdk: docker" >> README.md
-          echo "app_file: app.py" >> README.md
+          echo "app_file:app.py" >> README.md
           echo "pinned: false" >> README.md
           echo "---" >> README.md
 
