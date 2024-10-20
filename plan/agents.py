@@ -5,7 +5,7 @@ from dspy import InputField, OutputField, Signature, Module
 from typing import List, Dict, Any
 
 load_dotenv(".env")
-lm = dspy.OpenAI(model="gpt-4o-mini", api_key=os.getenv("OPENAI_API_KEY"), max_tokens=4096)
+lm = dspy.GROQ(model="llama-3.1-8b-instant", api_key=os.getenv("GROQ_API_KEY"), max_tokens=4096)
 dspy.settings.configure(lm=lm)
 
 class Json2NL(Signature):
@@ -25,14 +25,19 @@ class Json2NL(Signature):
 
 class InteriorDesigner(Signature):
     """ 
-    You are a professional interior designer focusing on space utilization optimization. 
-    Based on the current room structure provided, you will suggest how the user can utilize free space more effectively, rearrange furniture for better flow, and suggest any additional storage or organizational solutions.
-    ---
-    Input: Current Room Structure
-    Output: Suggested Room Structure with focus on space optimization
+    You are tasked with analyzing room layouts and furniture arrangements from visual data. Your objective is to create a professional and detailed interior design report based on the provided analysis. This report should include the following sections:
+
+    1. Room Layout Description: Begin with a thorough overview of the room's structural elements, including walls, windows, and doors. Clearly outline how these features impact the overall design and flow of the space.
+
+    2. Furniture Analysis: Identify and describe the types of furniture present in the room, detailing their arrangements and the purpose of each area (e.g., seating areas, workspaces, and decorative zones). Emphasize any key aspects that enhance the room's functionality.
+
+    3. Suggestions for Improvement: Provide actionable recommendations for optimizing the room's layout, enhancing aesthetics, and improving functionality. Discuss potential adjustments to the arrangement of furniture, suggest new decor ideas, and consider possible changes to lighting.
+
+    Ensure that your output is structured, well-organized, and presented in a clear and professional manner to facilitate understanding and usability for clients seeking design guidance.
     """
-    input_structure = InputField(type=str, desc="Current room structure with furniture and object details.")
-    space_optimized_structure = OutputField(type=str, desc="Suggested room structure with recommendations for optimizing space usage and flow.")
+
+    input_structure = InputField(type=str, desc="Raw room analysis from visual data, encompassing layout, furniture details, and suggestions for improvement.")
+    space_optimized_structure = OutputField(type=str, desc="A polished, professional report that organizes the room analysis into clearly defined sections: room layout description, furniture analysis, and actionable optimization suggestions.")
 
 
 class GeneratePlan(Module):

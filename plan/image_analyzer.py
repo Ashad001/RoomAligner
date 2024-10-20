@@ -5,7 +5,7 @@ from groq import Groq
 load_dotenv()
 
 class ImageAnalyzer:
-    def __init__(self, model_name="llava-v1.5-7b-4096-preview"):
+    def __init__(self, model_name="llama-3.2-90b-vision-preview"):
         self.model_name = model_name
         self.client = Groq()
 
@@ -25,12 +25,16 @@ class ImageAnalyzer:
                 "content": [
                     {
                         "type": "text",
-                        "text": "You are an AI assistant specialized in analyzing floor plan images to provide a comprehensive, room-by-room analysis. For each room in the image, you will identify its structure, the positioning of furniture, and functional zones. Your task is to analyze every room individually, using visual cues from the image to identify specific objects such as beds, sofas, tables, and other furniture or fixtures. Evaluate how space is used within each room, and describe any potential areas for optimizing furniture arrangement or improving space utilization."
+                        "text": f"""You are a Vision Language Model tasked with analyzing room images. Your primary focus is to extract visual features such as furniture arrangement, room layout, and suggestions for optimizing space or improving aesthetics.
 
-                    },
-                    {
-                        "type": "text",
-                        "text": coordinates_message
+                        Your response should be structured as follows:
+
+                        1. Room Layout Description: Describe the layout of the room, including major structural elements (e.g., walls, windows, doors).
+                        
+                        2. Furniture Analysis: Identify and describe the furniture in the room, including positioning, type of furniture, and any functional zones (e.g., seating area, work area).
+
+                        3. Suggestions for Improvement: Provide actionable suggestions for optimizing the room layout, improving space usage, or enhancing the aesthetics. Focus on furniture arrangement, lighting, and potential decor adjustments.
+                        """
                     },
                     {
                         "type": "image_url",

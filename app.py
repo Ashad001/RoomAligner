@@ -34,32 +34,41 @@ suggestions_generator = GenerateSuggestions()
 async def upload_image(file: UploadFile = File(...)):
     """
     Upload room image and get natural language description and suggested room layout.
+    Supports multiple image formats like PNG, JPEG, BMP.
     """
     try:
+        # Read the image file contents
         contents = await file.read()
+        
+        # Open the image and automatically handle the format
         img = Image.open(BytesIO(contents))
+        image_format = img.format  # Identify the image format (e.g., JPEG, PNG)
 
-        # Convert image to base64
+        # Check if the format is supported
+        if image_format not in ["JPEG", "PNG", "BMP"]:
+            raise HTTPException(status_code=400, detail="Unsupported image format. Please upload a JPEG, PNG, or BMP image.")
+
+        # Convert the image to base64
         buffered = BytesIO()
-        img.save(buffered, format="JPEG")
+        img.save(buffered, format=image_format)  # Keep the original format
         image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-        # Step 1: Classify objects in the image
-        result = inference_client.infer_image(image_base64)
-        data = preprocess_data(result)
+        # Step 1: Classify objects in the image (commented out for now)
+        # result = inference_client.infer_image(image_base64)
+        # data = preprocess_data(result)
 
-        # Step 2: Generate a natural language description
-        nl_description = plan_generator.forward(data)
+        # Step 2: Generate a natural language description (excluded for now)
+        # nl_description = plan_generator.forward(data)
 
         # Step 3: Analyze room structure and generate suggestions
-        room_structure = image_analyzer.generate_floor_plan_details(image_base64, nl_description)
-        suggested_structure = suggestions_generator.forward(room_structure.content)
+        room_structure = image_analyzer.generate_floor_plan_details(image_base64, "")
+        formatted_room_structure = suggestions_generator.forward(room_structure.content)
 
         # Return response as JSON
         return JSONResponse(content={
-            "natural_language_description": nl_description,
+            "natural_language_description": "i excluded this for now",  # nl_description
             "room_structure": room_structure.content,
-            "suggested_structure": suggested_structure
+            "formatted_room_structure": formatted_room_structure
         })
 
     except Exception as e:

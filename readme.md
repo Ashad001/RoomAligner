@@ -108,7 +108,7 @@ curl -X POST "https://ashad001-roomaligner.hf.space/upload-room-image/" \
 If the request is successful, the API returns a JSON response with:
 - Natural language description of the room plan.
 - The current room structure.
-- Suggested room structure for better flow and space utilization.
+- Formatted room structure for better flow and space utilization.
 
 ###$# **Example Response**
 
@@ -116,7 +116,7 @@ If the request is successful, the API returns a JSON response with:
 {
   "natural_language_description": "The room contains a sofa, coffee table, and TV. The layout is suitable for a small living room.",
   "room_structure": "Current room layout includes the following furniture: Sofa (center), TV (front), Coffee Table (middle).",
-  "suggested_structure": "We suggest moving the coffee table closer to the seating area and positioning the TV on the right wall to improve flow."
+  "formatted_room_structure": "We suggest moving the coffee table closer to the seating area and positioning the TV on the right wall to improve flow."
 }
 ```
 
@@ -164,7 +164,7 @@ To interact with the API, follow these steps:
            const result = await response.json();
            console.log('Natural Language Description:', result.natural_language_description);
            console.log('Current Room Structure:', result.room_structure);
-           console.log('Suggested Room Structure:', result.suggested_structure);
+           console.log('Formatted Room Structure:', result.formatted_room_structure);
        } catch (error) {
            console.error('Error uploading image:', error);
        }

@@ -33,19 +33,19 @@ if image is not None:
     img.save(buffered, format="JPEG")
     image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-    st.write("Classifying the objects in the image...")
-    result = inference_client.infer_image(image_base64)  
-    data = preprocess_data(result)
+    # st.write("Classifying the objects in the image...")
+    # result = inference_client.infer_image(image_base64)  
+    # data = preprocess_data(result)
 
-    st.write("Objects in the image have been classified.")
-    st.write("Generating a natural language description based on the image...")
+    # st.write("Objects in the image have been classified.")
+    # st.write("Generating a natural language description based on the image...")
 
-    nl_description = plan_generator.forward(data)
-    st.write("Natural language description:")
-    st.write(nl_description)
+    # nl_description = plan_generator.forward("")
+    # st.write("Natural language description:")
+    # st.write(nl_description)
 
     st.write("Generating suggestions for room structure based on the image...")
-    room_structure = image_analyzer.generate_floor_plan_details(image_base64, nl_description)  
+    room_structure = image_analyzer.generate_floor_plan_details(image_base64, "")  
     st.write("Current room structure:")
     st.write(room_structure.content)
     

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test UI for Image Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: grey;
+        }
+        #output {
+            margin-top: 20px;
+            text-align: left;
+            white-space: pre-wrap;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Upload Room Image</h1>
+        <input type="file" id="fileInput" accept="image/*" />
+        <button id="uploadButton" disabled>Upload Image</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const outputDiv = document.getElementById('output');
+
+        // Enable the upload button when an image is selected
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                uploadButton.disabled = false;
+            } else {
+                uploadButton.disabled = true;
+            }
+        });
+
+        // Upload image to the FastAPI backend
+        uploadButton.addEventListener('click', async function() {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/upload-room-image/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed: ' + response.statusText);
+                }
+
+                const result = await response.json();
+                outputDiv.innerText = JSON.stringify(result, null, 2);  // Format JSON response
+            } catch (error) {
+                outputDiv.innerText = 'Error: ' + error.message;
+            }
+        });
+    </script>
+
+</body>
+</html>
