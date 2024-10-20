@@ -14,9 +14,11 @@
             margin: 0 auto;
             text-align: center;
         }
-        input[type="file"] {
+        input[type="file"], input[type="text"] {
             display: block;
             margin: 20px auto;
+            padding: 10px;
+            width: 80%;
         }
         button {
             padding: 10px 20px;
@@ -42,17 +44,28 @@
 
     <div class="container">
         <h1>Upload Room Image</h1>
+        
+        <!-- File Upload Section -->
         <input type="file" id="fileInput" accept="image/*" />
-        <button id="uploadButton" disabled>Upload Image</button>
+        <button id="uploadButton" disabled>Upload Image (File)</button>
+
+        <h2>OR</h2>
+        
+        <!-- URL Upload Section -->
+        <input type="text" id="urlInput" placeholder="Enter Image URL" />
+        <button id="uploadUrlButton">Upload Image (URL)</button>
+
         <div id="output"></div>
     </div>
 
     <script>
         const fileInput = document.getElementById('fileInput');
         const uploadButton = document.getElementById('uploadButton');
+        const urlInput = document.getElementById('urlInput');
+        const uploadUrlButton = document.getElementById('uploadUrlButton');
         const outputDiv = document.getElementById('output');
 
-        // Enable the upload button when an image is selected
+        // Enable the upload button when a file is selected
         fileInput.addEventListener('change', function() {
             if (fileInput.files.length > 0) {
                 uploadButton.disabled = false;
@@ -61,7 +74,7 @@
             }
         });
 
-        // Upload image to the FastAPI backend
+        // Upload image file to the FastAPI backend
         uploadButton.addEventListener('click', async function() {
             const file = fileInput.files[0];
             if (!file) return;
@@ -81,6 +94,33 @@
 
                 const result = await response.json();
                 outputDiv.innerText = JSON.stringify(result, null, 2);  // Format JSON response
+            } catch (error) {
+                outputDiv.innerText = 'Error: ' + error.message;
+            }
+        });
+
+        // Upload image URL to the FastAPI backend
+        uploadUrlButton.addEventListener('click', async function() {
+            const imageUrl = urlInput.value.trim();
+            if (!imageUrl) {
+                outputDiv.innerText = 'Please enter a valid image URL.';
+                return;
+            }
+
+            try {
+                const response = await fetch('https://ashad001-roomaligner.hf.space/upload-room-image-url/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `image_url=${encodeURIComponent(imageUrl)}`
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed: ' + response.statusText);
+                }
+                const result = await response.json();
+                outputDiv.innerText = JSON.stringify(result, null, 2);  
             } catch (error) {
                 outputDiv.innerText = 'Error: ' + error.message;
             }
