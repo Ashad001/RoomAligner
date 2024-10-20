@@ -24,13 +24,18 @@ suggestions_generator = GenerateSuggestions()
 st.write("Welcome to the Interior Design Assistant!")
 st.write("Please upload an image of your room plan.")
 
-image = st.file_uploader("Choose an image...", type="jpg")
+# Allowing multiple image formats
+image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "bmp", "tiff"])
 if image is not None:
     img = Image.open(image)
     st.image(img, caption="Uploaded Image.", use_column_width=True)
+
+    # Get the image format
+    image_format = img.format if img.format else "JPEG"
     
+    # Convert the image to base64
     buffered = BytesIO()
-    img.save(buffered, format="JPEG")
+    img.save(buffered, format=image_format)
     image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
     # st.write("Classifying the objects in the image...")
@@ -53,4 +58,3 @@ if image is not None:
     
     st.write("Suggested room structure:")
     st.write(suggested_structure)
-
