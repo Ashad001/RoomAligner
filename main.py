@@ -3,7 +3,7 @@ import json
 from dotenv import load_dotenv
 from plan.agents import GeneratePlan, GenerateSuggestions
 from plan.image_analyzer import ImageAnalyzer
-from raster.raster import InferenceClient
+# from raster.raster import InferenceClient
 from utils.preprocess_data import preprocess_data
 import streamlit as st
 import base64
@@ -16,7 +16,7 @@ st.set_page_config(page_title="Interior Designer", layout="wide")
 
 st.title("🧑🏼 Interior Design Assistant")
 
-inference_client = InferenceClient()
+# inference_client = InferenceClient()
 plan_generator = GeneratePlan()
 image_analyzer = ImageAnalyzer()
 suggestions_generator = GenerateSuggestions()
