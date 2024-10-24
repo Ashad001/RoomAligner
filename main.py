@@ -14,47 +14,63 @@ load_dotenv()
 
 st.set_page_config(page_title="Interior Designer", layout="wide")
 
+st.markdown("""
+    <style>
+        .main {
+            background-color: #f8f9fa;
+            font-family: "Arial", sans-serif;
+        }
+        .stButton > button {
+            color: white;
+            background-color: #007bff;
+            border-radius: 4px;
+            padding: 8px 16px;
+        }
+        .stButton > button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 st.title("🧑🏼 Interior Design Assistant")
 
-# inference_client = InferenceClient()
-plan_generator = GeneratePlan()
-image_analyzer = ImageAnalyzer()
-suggestions_generator = GenerateSuggestions()
+st.markdown("""
+    Welcome to the **Interior Design Assistant**! 
+    Upload an image of your room plan and receive design suggestions and structure recommendations.
+    """)
 
-st.write("Welcome to the Interior Design Assistant!")
-st.write("Please upload an image of your room plan.")
+st.sidebar.header("Upload Section")
+st.sidebar.write("Please upload an image of your room plan:")
 
-# Allowing multiple image formats
-image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "bmp", "tiff"])
-if image is not None:
+image = st.sidebar.file_uploader("Choose an image...", type=["jpg", "jpeg", "png", "bmp", "tiff"])
+
+if image:
     img = Image.open(image)
-    st.image(img, caption="Uploaded Image.", use_column_width=True)
+    st.image(img, caption="Uploaded Image", use_column_width=True)
 
-    # Get the image format
     image_format = img.format if img.format else "JPEG"
-    
-    # Convert the image to base64
     buffered = BytesIO()
     img.save(buffered, format=image_format)
     image_base64 = base64.b64encode(buffered.getvalue()).decode('utf-8')
 
-    # st.write("Classifying the objects in the image...")
-    # result = inference_client.infer_image(image_base64)  
-    # data = preprocess_data(result)
+    if st.button("Analyze Image"):
+        st.write("Generating room structure details...")
 
-    # st.write("Objects in the image have been classified.")
-    # st.write("Generating a natural language description based on the image...")
+        plan_generator = GeneratePlan()
+        image_analyzer = ImageAnalyzer()
+        suggestions_generator = GenerateSuggestions()
 
-    # nl_description = plan_generator.forward("")
-    # st.write("Natural language description:")
-    # st.write(nl_description)
+        room_structure = image_analyzer.generate_floor_plan_details(image_base64, "")
+        st.subheader("Current Room Structure")
+        st.write(room_structure.content)
 
-    st.write("Generating suggestions for room structure based on the image...")
-    room_structure = image_analyzer.generate_floor_plan_details(image_base64, "")  
-    st.write("Current room structure:")
-    st.write(room_structure.content)
-    
-    suggested_structure = suggestions_generator.forward(room_structure.content)
-    
-    st.write("Suggested room structure:")
-    st.write(suggested_structure)
+        st.write("Generating design suggestions...")
+        suggested_structure = suggestions_generator.forward(room_structure.content)
+
+        st.subheader("Suggested Room Structure")
+        st.write(suggested_structure)
+
+else:
+    st.sidebar.write("No image uploaded yet.")
+
+st.sidebar.write("Click 'Analyze Image' to generate room suggestions.")
