@@ -53,12 +53,10 @@ streamlit run main.py
 - `utils/`: Utility functions, including the data preprocessing pipeline.
 - `main.py`: The main entry point for the Streamlit app.
 
-## User Guide
-
-Here's the modified version of your user guide to include the new endpoint for uploading an image via a URL.
+## Developer Guide 
 
 <details>
-<summary>Click to expand the User Guide</summary>
+<summary>Click to expand the Developer Guide</summary>
 
 #### **Overview**
 
